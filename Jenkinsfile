@@ -47,21 +47,21 @@ pipeline {
             }
         }
     }
-    // post {
-    //         failure {
-    //             mail to: 'jthuo121@gmail.com',
-    //             subject:"FAILURE: ${currentBuild.fullDisplayName}",
-    //             body: "Test Complete Build failed."
-    //         }
-    //     }
-        post {
-            success {
-                slackSend channel: '#jenkins-channel', color: '#c0c0c0', message: "Repo: ${env.JOB_NAME} - BuildNo:${ env.BUILD_NUMBER } - live site: ${ env.Live_Site } "
-                } 
-                // failure {
-                //     mail to: 'kahoraderrick@gmail.com', subject: "FAILURE: ${currentBuild.fullDisplayName}", body: "Test
-                //     Complete Build failed.", slackSend color: "good", message: "Build ${ env.BUILD_NUMBER } of ${ env.JOB_NAME } Succeeded.
-                //     Deployed at ${ LIVE_SITE } "
-                //     }
-             }
+    post {
+            failure {
+                mail to: 'jthuo121@gmail.com',
+                subject:"FAILURE: ${currentBuild.fullDisplayName}",
+                body: "Test Complete Build failed."
+            }
+        }
+        // post {
+        //     success {
+        //         slackSend channel: '#jenkins-channel', color: '#c0c0c0', message: "Repo: ${env.JOB_NAME} - BuildNo:${ env.BUILD_NUMBER } - live site: ${ env.Live_Site } "
+        //         } 
+        //         // failure {
+        //         //     mail to: 'kahoraderrick@gmail.com', subject: "FAILURE: ${currentBuild.fullDisplayName}", body: "Test
+        //         //     Complete Build failed.", slackSend color: "good", message: "Build ${ env.BUILD_NUMBER } of ${ env.JOB_NAME } Succeeded.
+        //         //     Deployed at ${ LIVE_SITE } "
+        //         //     }
+        //      }
 }

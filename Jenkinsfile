@@ -47,13 +47,33 @@ pipeline {
             }
         }
     }
+
+
     post {
-            failure {
-                mail to: 'jthuo121@gmail.com',
-                subject:"FAILURE: ${currentBuild.fullDisplayName}",
-                body: "Test Complete Build failed."
-            }
+
+        success{
+           slackSend channel: '#test-slack-integration-to-jenkins',  color: '#c0c0c0', message: "Repo: ${env.JOB_NAME} - BuildNo: ${env.BUILD_NUMBER} - live site: ${env.Live_Site}"
         }
+        failure {
+            emailext body: "RepoName-: ${env.JOB_NAME} - BuildNo: ${env.BUILD_NUMBER} - live site: ${env.Live_Site}",
+            recipientProviders: [developers(), requestor()],
+            subject: 'Test Complete Build failed.',
+            to: 'jthuo121@gmail.com'
+        }
+
+    }
+
+
+
+
+
+    // post {
+    //         failure {
+    //             mail to: 'jthuo121@gmail.com',
+    //             subject:"FAILURE: ${currentBuild.fullDisplayName}",
+    //             body: "Test Complete Build failed."
+    //         }
+    //     }
         // post {
         //     success {
         //         slackSend channel: '#jenkins-channel', color: '#c0c0c0', message: "Repo: ${env.JOB_NAME} - BuildNo:${ env.BUILD_NUMBER } - live site: ${ env.Live_Site } "
